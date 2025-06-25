@@ -8,7 +8,7 @@ This repository provides partial code and interface structures for our research 
 - Help reviewers or interested researchers understand or partially reproduce the results;
 - Serve as a basis for full open-sourcing in the future.
 
-❗Full datasets and detailed implementation will be released after the paper is accepted.
+❗ This project is not complete during the paper preparation and review stage .Full datasets and detailed implementation will be released after the paper is accepted.
 
 ##  Project Structure
 
