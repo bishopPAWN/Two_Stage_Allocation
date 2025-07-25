@@ -1,5 +1,7 @@
 function [nucleolus, sigma_trace] = compute_Nucleolus(matrix)
     % 基础参数
+    % The constraints strength technology is partly inspired by the implementation in https://github.com/himeinhardt/MatTuGames/blob/master/mat_tugames/nucl.m
+    % Licensed under the FreeBSD License
     [num_rows, num_cols] = size(matrix);
     n = num_cols - 1; % 玩家数量
     fg = matrix(:, 1:n); % 联盟的二进制表示（每一行为一个联盟）
