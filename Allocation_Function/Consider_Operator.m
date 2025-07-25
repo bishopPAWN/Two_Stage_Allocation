@@ -22,6 +22,7 @@ function Output= Consider_Operator(Result_da,Result_mar,Result_rt,Input,Paramete
     Ex_post_Allocation_matrix_Shapley=zeros(6,K);
     Ex_post_Allocation_matrix_Least_Core=zeros(6,K);
     Ex_post_Allocation_matrix_Proportional=zeros(6,K);
+    Ex_post_Allocation_matrix_Nucleolus=zeros(6,K);
     Dev_vector=zeros(1,K);
     Surplus=zeros(6,K);
     Ind_contri_excepted=zeros(6,1);
@@ -31,11 +32,19 @@ function Output= Consider_Operator(Result_da,Result_mar,Result_rt,Input,Paramete
     end
     for j=1:K
         Ex_post_Allocation_matrix_DP(:,j)=compute_dp(Profit_matrix_ex_post(:,:,j))';
+        tic 
         Ex_post_Allocation_matrix_Shapley(:,j)=compute_shapley(Profit_matrix_ex_post(:,:,j))';
+        Shapley_time=toc;
+        tic
         Ex_post_Allocation_matrix_Least_Core(:,j)=compute_Least_Core(Profit_matrix_ex_post(:,:,j))';
+        Least_time=toc;
+        tic
+        Ex_post_Allocation_matrix_Nucleolus(:,j)=compute_Nucleolus(Profit_matrix_ex_post(:,:,j))';
+        toc
         Ex_post_Allocation_matrix_Proportional(:,j)=compute_Proportional(Profit_matrix_ex_post(:,:,j))';
     end
     Fixed_Ratio_allocation=Proportion_Record(Result_da,Result_rt,Parameter);
+    tic
     Solution_1=compute_dp(Profit_matrix_expected);
     Chart=propensity_chat(Profit_matrix_expected,Solution_1);
     DP_expected=Chart(5,1);%日前的DP值情况
@@ -61,6 +70,7 @@ function Output= Consider_Operator(Result_da,Result_mar,Result_rt,Input,Paramete
             Allocate_matrix_1(ii,j)=Allocate_matrix_mid(ii,j)+Dev_vector(1,j)*Surplus(ii,j)/sum(Surplus(:,j));
         end
     end
+    Proposed_time=toc;
     for k=1:6
         Allocate_matrix(7-k,:)=Allocate_matrix_1(k,:);
     end
@@ -71,6 +81,8 @@ function Output= Consider_Operator(Result_da,Result_mar,Result_rt,Input,Paramete
         Chart_Least_core(:,:,j)=propensity_chat(Profit_matrix_ex_post(:,:,j),Ex_post_Allocation_matrix_Least_Core(:,j));
         Chart_Proportional(:,:,j)=propensity_chat(Profit_matrix_ex_post(:,:,j),Ex_post_Allocation_matrix_Proportional(:,j));
         Chart_Fixed_Ratio(:,:,j)=propensity_chat(Profit_matrix_ex_post(:,:,j),Fixed_Ratio_allocation(:,j));
+        Chart_Nucleolus(:,:,j)=propensity_chat(Profit_matrix_ex_post(:,:,j),Ex_post_Allocation_matrix_Nucleolus(:,j));
+
     end
     for j=1:K
         DP_two_stage(:,j)=Chart_two_stage(5,:,j)';
@@ -79,6 +91,8 @@ function Output= Consider_Operator(Result_da,Result_mar,Result_rt,Input,Paramete
         DP_least(:,j)=Chart_Least_core(5,:,j)';
         DP_proportional(:,j)=Chart_Proportional(5,:,j)';
         DP_fixed_ratio(:,j)=Chart_Fixed_Ratio(5,:,j)';
+        DP_Nucleolus(:,j)=Chart_Nucleolus(5,:,j)';
+
     end
     %%考虑期望上的事情
     Vector=0;
@@ -92,6 +106,7 @@ function Output= Consider_Operator(Result_da,Result_mar,Result_rt,Input,Paramete
     Chart_Proportional=propensity_chat(Profit_final_expected,Ex_post_Allocation_matrix_Proportional*P');
     Chart_Dp_ex=propensity_chat(Profit_final_expected,Ex_post_Allocation_matrix_DP*P');
     Chart_Dp_Fixed=propensity_chat(Profit_final_expected,Fixed_Ratio_allocation*P');
+    Chart_Dp_Nucleolus=propensity_chat(Profit_final_expected,Ex_post_Allocation_matrix_Nucleolus*P');
 
     %% Count DP_two_stage<DP_one_stage
     mean_matrix = mean(DP_two_stage); 
@@ -131,4 +146,9 @@ function Output= Consider_Operator(Result_da,Result_mar,Result_rt,Input,Paramete
     Output.DP_Least=DP_least;
     Output.DP_Proportional=DP_proportional;
     Output.DP_Fixed=DP_fixed_ratio;
+    Output.DP_Nucleolus=DP_Nucleolus;
+    Output.Shapley_time=Shapley_time;
+    Output.Least_time=Least_time;
+    Output.Equal_time=Proposed_time;
+    Output.Chart_Nucleolus=Chart_Dp_Nucleolus;
 end
