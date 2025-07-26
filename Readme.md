@@ -33,7 +33,7 @@ This repository provides partial code and interface structures for our research 
 
 ├── Allocation_Functions/                                # Core functions used for profit allocation  
 │   ├── compute_Least_Core.m                             # Least Core allocation implementation (Simplified Nucleolus-First Step)
-│   ├── compute_Nucleolus.m                             # Nucleolus allocation implementation (Too complex, performance is not good as the simplified version, therefore, it is abandoned)   
+│   ├── compute_Nucleolus.m                             # Nucleolus allocation implementation (calculate the allocation of the nucleolus method)
 │   ├── compute_dp.m                                     # Equal DP allocation method  
 │   ├── compute_shapley.m                                # Shapley value allocation  
 │   ├── Operator_2.m                                     # Matrix generation with operator consideration  
