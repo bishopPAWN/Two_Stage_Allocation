@@ -20,11 +20,11 @@ This project corresponds to the paper **"A Two-Stage Profit Allocation Method fo
 │   └── Case4-1-1.xlsx                  # Profit allocation solution of the proposed method  
 │   └── Case4-1-2.xlsx                  # Profit allocation process of the proposed allocation method  
 │   └── Fig_Three_Member                #Figure Plot for Figure 5:Individual and Allocated Profit for members
-├── Case_4_2_Shenzhen_Case/                              # Real-world case for the Shenzhen demand response market  
+├── Case_4_2 Case/                              # Real-world case for the  demand response market  
 │   ├── Allocation_Analysis.m                                  # Code for profit creation and calculation  
-│   └── Towngas_Case_Fig_7.xlsx                                # Data for figure plot Figure 7
+│   └── Case_Fig_7.xlsx                                # Data for figure plot Figure 7
 
-├── Case_4_3_Shenzhen_Future_Case/                       # Shenzhen future case (based on actual operation data)
+├── Case_4_3_Case/                       # case (based on actual operation data)
 │   └── Parameter/                  #  the detailed parameters of all resources.(Ag:the )
 │   └── Allocation_Solution_Paper_Data/                  # Allocation results used in the paper  
 │       ├── Without_operator/                            # Data used
